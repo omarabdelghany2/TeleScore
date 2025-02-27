@@ -36,7 +36,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self._initUI()
         self.dialogs = []
 
-
+    def _helloButtonClicked(self):
+        print("Hello button clicked!")
     def _initUI(self):
         path = resourcePath("src/window/ui/mainwindow.ui") # replaced complicated path logic with resourcePath()
         uic.loadUi(path, self) # Load the .ui file
@@ -44,6 +45,19 @@ class MainWindow(QtWidgets.QMainWindow):
         self.setWindowIcon(QIcon(resourcePath("src/resources/icon.ico"))) # Using a slightly modified version of my PyInstaller Resource system. Also seen on line 18. Basically uses working directory OR temp directory for absolute paths to files.
         self.show() # Show the GUI
 
+        # Connect Hello Button
+        self.helloButton.clicked.connect(self._helloButtonClicked)
+        self.helloButton.setStyleSheet("""
+            QPushButton {
+                background-color: red;
+                color: white;
+                font-size: 18px;
+                font-weight: bold;
+                border-radius: 10px;
+                padding: 10px;
+            }
+        """)
+        self.helloButton.setMinimumSize(120, 50)  # Bigger button
         # Setting up the toolbar
         self.toolBar.addWidget(QtWidgets.QPushButton(QIcon(resourcePath("src/resources/icon.ico")),
          " TeleScore v1.0.3 Beta Preview 1"))
